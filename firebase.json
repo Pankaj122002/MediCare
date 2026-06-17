@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "medicare-c428d",
     "public": "dist",
     "ignore": [
       "firebase.json",
