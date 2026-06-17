@@ -37,26 +37,25 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({ onFinish }) => {
     const loadNextImage = () => {
       if (currentLoadIndex >= frameCount) return;
       const img = images[currentLoadIndex];
-      const checkReady = () => {
-        if (currentLoadIndex >= 75 && !isReady) {
-          setIsReady(true);
-        }
-        requestAnimationFrame(loadNextImage);
-      };
-
       img.onload = () => {
         loadedCount++;
         currentLoadIndex++;
-        checkReady();
+        requestAnimationFrame(loadNextImage);
       };
       img.onerror = () => {
         currentLoadIndex++;
-        checkReady();
+        requestAnimationFrame(loadNextImage);
       };
       img.src = currentFrame(currentLoadIndex);
     };
 
     loadNextImage();
+
+    // Guarantee the user is never stuck on Vercel rate limits. 
+    // Always unlock the button after 2 seconds regardless of network drops!
+    const unlockTimeout = setTimeout(() => {
+      setIsReady(true);
+    }, 2000);
 
     let playFrame = 0;
     let animationRef: number;
