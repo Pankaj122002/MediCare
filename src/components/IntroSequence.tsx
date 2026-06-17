@@ -56,8 +56,15 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({ onFinish }) => {
       img.src = currentFrame(currentLoadIndex);
     };
 
-    loadNextImage();
+    const startPreloading = () => {
+      loadNextImage();
+    };
 
+    if (document.readyState === 'complete') {
+      startPreloading();
+    } else {
+      window.addEventListener('load', startPreloading);
+    }
     let playFrame = 0;
     let animationRef: number;
     let lastTime = performance.now();
@@ -165,6 +172,7 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({ onFinish }) => {
     startPlaybackRef.current = startPlayback;
 
     return () => {
+      window.removeEventListener('load', startPreloading);
       window.removeEventListener('resize', handleResize);
       if (animationRef) cancelAnimationFrame(animationRef);
     };

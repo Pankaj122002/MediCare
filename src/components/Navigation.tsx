@@ -87,7 +87,7 @@ export const Navigation = () => {
                 key={link.name} 
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                className="text-sm font-bold text-foreground drop-shadow-md hover:text-primary transition-colors"
               >
                 {link.name}
               </a>
@@ -97,10 +97,10 @@ export const Navigation = () => {
           <div className="hidden md:flex items-center space-x-4">
             <button 
               onClick={toggleTheme} 
-              className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
+              className="p-2 rounded-full hover:bg-muted text-foreground drop-shadow-md hover:text-primary transition-colors"
               aria-label="Toggle theme"
             >
-              {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              {isDark ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
             </button>
             <a 
               href={`tel:${doctorData.emergencyPhone}`} 
@@ -122,12 +122,12 @@ export const Navigation = () => {
           <div className="flex md:hidden items-center space-x-4">
             <button 
               onClick={toggleTheme} 
-              className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+              className="p-2 text-foreground drop-shadow-md hover:text-primary transition-colors"
             >
-              {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              {isDark ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
             </button>
           <button 
-            className="md:hidden text-slate-300 hover:text-white"
+            className="md:hidden text-foreground drop-shadow-md hover:text-primary transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
