@@ -1,0 +1,38 @@
+[
+  {
+    "id": "general-consultation",
+    "title": "General Consultation",
+    "shortDescription": "Comprehensive health checkups and personalized medical advice for your overall well-being.",
+    "fullDescription": "Our general consultation provides a thorough evaluation of your current health status. We focus on preventive care, early detection of potential issues, and lifestyle modifications to optimize your health span.",
+    "icon": "Stethoscope",
+    "price": "$150",
+    "duration": "45 mins"
+  },
+  {
+    "id": "cardiology",
+    "title": "Advanced Cardiology",
+    "shortDescription": "State-of-the-art heart diagnostics, ECGs, and personalized cardiovascular treatment plans.",
+    "fullDescription": "Utilizing the latest in medical technology, our cardiology department offers comprehensive heart assessments including stress tests, echocardiograms, and Holter monitoring to ensure your heart is functioning optimally.",
+    "icon": "Activity",
+    "price": "$300",
+    "duration": "60 mins"
+  },
+  {
+    "id": "preventative-care",
+    "title": "Preventative Care",
+    "shortDescription": "Proactive screening and vaccinations to keep you healthy before symptoms appear.",
+    "fullDescription": "We believe in stopping illnesses before they start. Our preventative care packages include full body scans, genetic screening, and customized vaccination schedules based on your lifestyle and travel needs.",
+    "icon": "ShieldCheck",
+    "price": "$200",
+    "duration": "30 mins"
+  },
+  {
+    "id": "telemedicine",
+    "title": "Virtual Consultation",
+    "shortDescription": "Secure, high-definition video consultations from the comfort of your home.",
+    "fullDescription": "Can't make it to the clinic? Our telemedicine service brings world-class medical expertise to your living room. Perfect for follow-ups, prescription refills, and minor urgent care needs.",
+    "icon": "Video",
+    "price": "$100",
+    "duration": "30 mins"
+  }
+]

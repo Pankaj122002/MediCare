@@ -1,0 +1,22 @@
+[
+  {
+    "question": "What are your clinic hours?",
+    "answer": "We are open Monday through Friday from 9:00 AM to 6:00 PM, and Saturdays from 10:00 AM to 2:00 PM. We are closed on Sundays and major public holidays. For emergencies, our 24/7 line is always available."
+  },
+  {
+    "question": "Do I need an appointment or do you accept walk-ins?",
+    "answer": "While we strongly recommend booking an appointment to minimize your wait time and guarantee you see the doctor, we do accept walk-ins for urgent but non-life-threatening conditions on a first-come, first-served basis."
+  },
+  {
+    "question": "What should I bring to my first appointment?",
+    "answer": "Please bring a valid photo ID, your insurance card, any relevant past medical records or test results, and a list of current medications you are taking."
+  },
+  {
+    "question": "Do you offer virtual or telemedicine consultations?",
+    "answer": "Yes, we offer secure, high-definition video consultations for follow-ups, minor illnesses, and prescription refills. You can select 'Virtual Consultation' when booking your appointment."
+  },
+  {
+    "question": "What is your cancellation policy?",
+    "answer": "We kindly request at least 24 hours' notice if you need to cancel or reschedule your appointment. This allows us to offer the time slot to another patient who may need care."
+  }
+]
