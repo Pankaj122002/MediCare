@@ -37,20 +37,21 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({ onFinish }) => {
     const loadNextImage = () => {
       if (currentLoadIndex >= frameCount) return;
       const img = images[currentLoadIndex];
+      const checkReady = () => {
+        if (currentLoadIndex >= 75 && !isReady) {
+          setIsReady(true);
+        }
+        requestAnimationFrame(loadNextImage);
+      };
+
       img.onload = () => {
         loadedCount++;
         currentLoadIndex++;
-        
-        // Mark as ready when we have an aggressive buffer for live CDN (150 frames = 5 seconds)
-        if (loadedCount === 150) {
-          setIsReady(true);
-        }
-        
-        requestAnimationFrame(loadNextImage);
+        checkReady();
       };
       img.onerror = () => {
         currentLoadIndex++;
-        requestAnimationFrame(loadNextImage);
+        checkReady();
       };
       img.src = currentFrame(currentLoadIndex);
     };
