@@ -6,11 +6,11 @@ export const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="py-16 md:py-20 bg-background relative">
-      <div className="container mx-auto px-6 max-w-4xl relative z-10">
-        <div className="text-center mb-16">
+    <section id="faq" className="py-10 md:py-14 bg-background relative">
+      <div className="container mx-auto px-6 max-w-3xl relative z-10">
+        <div className="text-center mb-10">
           <h2 className="text-sm font-bold tracking-widest text-primary uppercase mb-2">Got Questions?</h2>
-          <h3 className="text-4xl md:text-5xl font-heading font-bold mb-4 text-foreground">Frequently Asked Questions</h3>
+          <h3 className="text-3xl md:text-4xl font-heading font-bold mb-4 text-foreground">Frequently Asked Questions</h3>
         </div>
 
         <div className="space-y-4">

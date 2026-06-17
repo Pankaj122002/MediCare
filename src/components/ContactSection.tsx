@@ -4,14 +4,14 @@ import doctorData from '../data/doctor.json';
 
 export const ContactSection = () => {
   return (
-    <section id="contact" className="py-16 md:py-20 bg-background relative">
-      <div className="container mx-auto px-6 max-w-7xl relative z-10">
-        <div className="text-center mb-16">
+    <section id="contact" className="py-10 md:py-14 bg-background relative">
+      <div className="container mx-auto px-6 max-w-5xl relative z-10">
+        <div className="text-center mb-10">
           <h2 className="text-sm font-bold tracking-widest text-primary uppercase mb-2">Get in Touch</h2>
-          <h3 className="text-4xl md:text-5xl font-heading font-bold mb-4 text-foreground">Visit Our Clinic</h3>
+          <h3 className="text-3xl md:text-4xl font-heading font-bold mb-4 text-foreground">Visit Our Clinic</h3>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Contact Details */}
           <div className="space-y-8">
             <div className="flex items-start gap-4">
@@ -64,7 +64,7 @@ export const ContactSection = () => {
           </div>
 
           {/* Map */}
-          <div className="bg-card border border-border p-2 rounded-3xl h-[500px]">
+          <div className="bg-card border border-border p-2 rounded-3xl h-[350px]">
             <iframe 
               src="https://maps.google.com/maps?q=28.758113,77.503955&t=&z=15&ie=UTF8&iwloc=&output=embed" 
               className="w-full h-full border-0 rounded-[1.25rem] dark:invert-[.9] dark:hue-rotate-180" 
