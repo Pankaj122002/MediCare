@@ -49,8 +49,14 @@ export const HeroSection = () => {
       img.src = currentFrame(currentLoadIndex);
     };
 
-    // Delay start of background loading until after initial components are likely mounted
-    setTimeout(loadNextImage, 500);
+    // Delay background loading until Intro sequence finishes playing to prevent CPU/Network lag
+    const startHeroPreload = () => {
+      loadNextImage();
+    };
+    window.addEventListener('hero-preload', startHeroPreload, { once: true });
+    
+    // Fallback: Start loading after 12s if event is missed
+    const fallbackTimer = setTimeout(loadNextImage, 12000);
 
     function render() {
       if (!canvas || !context) return;
@@ -114,6 +120,8 @@ export const HeroSection = () => {
     );
 
     return () => {
+      window.removeEventListener('hero-preload', startHeroPreload);
+      clearTimeout(fallbackTimer);
       window.removeEventListener('resize', handleResize);
       ScrollTrigger.getAll().forEach(t => t.kill());
     };

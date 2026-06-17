@@ -65,6 +65,7 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({ onFinish }) => {
 
     const handleEnded = () => {
       setIsFadingOut(true);
+      window.dispatchEvent(new Event('hero-preload'));
       
       // Fade out audio smoothly
       if (audioRef.current) {
@@ -169,25 +170,7 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({ onFinish }) => {
     };
   }, []);
 
-  // Silently preload Hero frames once Intro frames are ready
-  useEffect(() => {
-    if (!isReady) return;
-    let i = 0;
-    const preloadNextHeroFrame = () => {
-      if (i >= 300) return;
-      const img = new Image();
-      img.onload = () => {
-        i++;
-        requestAnimationFrame(preloadNextHeroFrame);
-      };
-      img.onerror = () => {
-        i++;
-        requestAnimationFrame(preloadNextHeroFrame);
-      };
-      img.src = `/images/hero-bg/frame-${String(i).padStart(3, '0')}.webp`;
-    };
-    preloadNextHeroFrame();
-  }, [isReady]);
+  // Removed silent preloading of Hero frames to prevent extreme CPU/Network congestion during playback
 
   return (
     <AnimatePresence>
