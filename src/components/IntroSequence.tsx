@@ -41,8 +41,8 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({ onFinish }) => {
         loadedCount++;
         currentLoadIndex++;
         
-        // Mark as ready when we have a minimal buffer (e.g., 30 frames)
-        if (loadedCount === 30) {
+        // Mark as ready when we have an aggressive buffer for live CDN (150 frames = 5 seconds)
+        if (loadedCount === 150) {
           setIsReady(true);
         }
         
