@@ -40,22 +40,23 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({ onFinish }) => {
       img.onload = () => {
         loadedCount++;
         currentLoadIndex++;
+        
+        if (loadedCount >= frameCount) {
+          setIsReady(true);
+        }
+        
         requestAnimationFrame(loadNextImage);
       };
       img.onerror = () => {
-        currentLoadIndex++;
-        requestAnimationFrame(loadNextImage);
+        // Infinite retry for dropped CDN frames to guarantee 100% load
+        setTimeout(() => {
+          img.src = currentFrame(currentLoadIndex);
+        }, 200);
       };
       img.src = currentFrame(currentLoadIndex);
     };
 
     loadNextImage();
-
-    // Guarantee the user is never stuck on Vercel rate limits. 
-    // Always unlock the button after 2 seconds regardless of network drops!
-    const unlockTimeout = setTimeout(() => {
-      setIsReady(true);
-    }, 2000);
 
     let playFrame = 0;
     let animationRef: number;
@@ -167,6 +168,26 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({ onFinish }) => {
       if (animationRef) cancelAnimationFrame(animationRef);
     };
   }, []);
+
+  // Silently preload Hero frames once Intro frames are ready
+  useEffect(() => {
+    if (!isReady) return;
+    let i = 0;
+    const preloadNextHeroFrame = () => {
+      if (i >= 300) return;
+      const img = new Image();
+      img.onload = () => {
+        i++;
+        requestAnimationFrame(preloadNextHeroFrame);
+      };
+      img.onerror = () => {
+        i++;
+        requestAnimationFrame(preloadNextHeroFrame);
+      };
+      img.src = `/images/hero-bg/frame-${String(i).padStart(3, '0')}.webp`;
+    };
+    preloadNextHeroFrame();
+  }, [isReady]);
 
   return (
     <AnimatePresence>

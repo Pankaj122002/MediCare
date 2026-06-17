@@ -164,9 +164,9 @@ export const HeroSection = () => {
           
           <a 
             href={`tel:${doctorData.emergencyPhone}`} 
-            className="px-8 py-4 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 rounded-full font-medium transition-all flex items-center justify-center gap-2 w-full sm:w-auto backdrop-blur-md"
+            className="px-8 py-4 bg-red-600 hover:bg-red-500 text-white rounded-full font-bold transition-all transform hover:scale-105 shadow-[0_0_30px_rgba(220,38,38,0.5)] flex items-center justify-center gap-2 w-full sm:w-auto"
           >
-            <PhoneCall className="w-5 h-5" />
+            <PhoneCall className="w-5 h-5 animate-pulse" />
             Call Emergency
           </a>
         </div>
