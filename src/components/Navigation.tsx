@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, PhoneCall } from 'lucide-react';
+import { Menu, X, PhoneCall, Sun, Moon } from 'lucide-react';
 import doctorData from '../data/doctor.json';
 
 export const Navigation = () => {
@@ -26,6 +26,30 @@ export const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
+  const [isDark, setIsDark] = useState(true);
+
+  useEffect(() => {
+    const isDarkMode = localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    setIsDark(isDarkMode);
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    if (isDark) {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+      setIsDark(false);
+    } else {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+      setIsDark(true);
+    }
+  };
+
   const navLinks = [
     { name: 'Home', href: '#hero' },
     { name: 'About', href: '#about' },
@@ -47,13 +71,13 @@ export const Navigation = () => {
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        isScrolled ? 'glass py-4' : 'bg-transparent py-6'
+        isScrolled ? 'bg-background/80 backdrop-blur-xl border-b border-border shadow-sm py-4' : 'bg-transparent py-6'
       } ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}
     >
       <div className="container mx-auto px-6 max-w-7xl">
         <div className="flex items-center justify-between">
           <a href="#hero" className="flex items-center space-x-2" onClick={(e) => handleNavClick(e, '#hero')}>
-            <span className="text-2xl font-heading font-bold text-gradient-primary tracking-tight">MediCare<span className="text-white">Pro</span></span>
+            <span className="text-2xl font-heading font-bold text-gradient-primary tracking-tight">MediCare<span className="text-foreground">Pro</span></span>
           </a>
 
           {/* Desktop Nav */}
@@ -63,7 +87,7 @@ export const Navigation = () => {
                 key={link.name} 
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className="text-sm font-medium text-slate-300 hover:text-white transition-colors"
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
               >
                 {link.name}
               </a>
@@ -71,9 +95,16 @@ export const Navigation = () => {
           </nav>
 
           <div className="hidden md:flex items-center space-x-4">
+            <button 
+              onClick={toggleTheme} 
+              className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
+              aria-label="Toggle theme"
+            >
+              {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
             <a 
               href={`tel:${doctorData.emergencyPhone}`} 
-              className="flex items-center space-x-2 text-sm font-medium text-red-400 hover:text-red-300 transition-colors bg-red-500/10 px-4 py-2 rounded-full border border-red-500/20"
+              className="flex items-center space-x-2 text-sm font-bold text-white transition-colors bg-red-600 hover:bg-red-500 px-4 py-2 rounded-full shadow-[0_0_15px_rgba(220,38,38,0.3)]"
             >
               <PhoneCall className="w-4 h-4" />
               <span>Emergency</span>
@@ -81,19 +112,27 @@ export const Navigation = () => {
             <a 
               href="#appointment"
               onClick={(e) => handleNavClick(e, '#appointment')}
-              className="bg-primary hover:bg-primary/90 text-white text-sm font-medium px-6 py-2.5 rounded-full transition-colors shadow-[0_0_15px_rgba(14,165,233,0.5)]"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-medium px-6 py-2.5 rounded-full transition-colors shadow-md hover:shadow-[0_0_15px_rgba(14,165,233,0.3)]"
             >
               Book Now
             </a>
           </div>
 
-          {/* Mobile Menu Toggle */}
+          {/* Mobile Menu Toggle & Theme */}
+          <div className="flex md:hidden items-center space-x-4">
+            <button 
+              onClick={toggleTheme} 
+              className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+            >
+              {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
           <button 
             className="md:hidden text-slate-300 hover:text-white"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
+        </div>
         </div>
       </div>
 

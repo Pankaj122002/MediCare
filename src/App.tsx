@@ -50,13 +50,13 @@ function App() {
   const showIntro = !introFinished;
 
   return (
-    <main className="bg-slate-900 min-h-screen text-slate-50 font-sans relative overflow-x-hidden">
+    <main className="bg-background min-h-screen text-foreground font-sans relative overflow-x-hidden transition-colors duration-300">
       {showIntro && <IntroSequence onFinish={() => setIntroFinished(true)} />}
       
       <div style={{ opacity: showIntro ? 0 : 1, transition: 'opacity 1s ease-in-out' }}>
         <Navigation />
         <HeroSection />
-        <Suspense fallback={<div className="h-screen w-full bg-slate-900" />}>
+        <Suspense fallback={<div className="h-screen w-full bg-background" />}>
           <AboutSection />
           <ServicesSection />
           <AppointmentSection />

@@ -143,8 +143,8 @@ export const HeroSection = () => {
       </div>
 
       {/* Content Layer */}
-      <div className="relative z-20 h-full flex flex-col items-center justify-center text-center px-4 max-w-5xl mx-auto">
-        <h1 className="hero-text text-5xl md:text-7xl lg:text-8xl font-heading font-bold tracking-tight mb-6 leading-tight">
+      <div className="relative z-20 h-full flex flex-col items-center justify-center text-center px-4 max-w-5xl mx-auto mt-10 md:mt-0">
+        <h1 className="hero-text text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-heading font-bold tracking-tight mb-6 leading-tight text-white">
           Your Health, <br/>
           <span className="text-gradient-primary">Our Priority.</span>
         </h1>

@@ -34,15 +34,15 @@ export const ServicesSection = () => {
   }, []);
 
   return (
-    <section id="services" ref={sectionRef} className="py-24 bg-slate-900 relative">
+    <section id="services" ref={sectionRef} className="py-16 md:py-20 bg-background relative">
       {/* Background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="container mx-auto px-6 max-w-7xl relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-sm font-bold tracking-widest text-primary uppercase mb-2">Our Services</h2>
-          <h3 className="text-4xl md:text-5xl font-heading font-bold mb-4">Premium Treatments</h3>
-          <p className="text-slate-400 max-w-2xl mx-auto">
+          <h3 className="text-4xl md:text-5xl font-heading font-bold mb-4 text-foreground">Premium Treatments</h3>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
             Combining state-of-the-art technology with compassionate care to provide you with the best possible medical outcomes.
           </p>
         </div>
@@ -55,22 +55,22 @@ export const ServicesSection = () => {
             return (
               <div 
                 key={service.id}
-                className="group relative bg-slate-800/50 backdrop-blur-sm border border-white/5 rounded-2xl p-8 hover:bg-slate-800 transition-all duration-500 hover:-translate-y-2 shadow-lg hover:shadow-[0_20px_40px_-15px_rgba(14,165,233,0.3)]"
+                className="group relative bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-8 hover:bg-card transition-all duration-500 hover:-translate-y-2 shadow-lg hover:shadow-[0_20px_40px_-15px_rgba(14,165,233,0.3)]"
                 style={{ perspective: '1000px' }}
               >
-                <div className="w-14 h-14 bg-slate-900 rounded-xl flex items-center justify-center mb-6 border border-white/10 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 shadow-[inset_0_2px_10px_rgba(255,255,255,0.05)]">
-                  <IconComponent className="w-7 h-7 text-primary group-hover:text-emerald-400 transition-colors duration-500" />
+                <div className="w-14 h-14 bg-muted rounded-xl flex items-center justify-center mb-6 border border-border group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 shadow-[inset_0_2px_10px_rgba(255,255,255,0.05)]">
+                  <IconComponent className="w-7 h-7 text-primary group-hover:text-emerald-500 transition-colors duration-500" />
                 </div>
                 
-                <h4 className="text-2xl font-bold mb-3">{service.title}</h4>
-                <p className="text-slate-400 mb-6 leading-relaxed line-clamp-3">
+                <h4 className="text-2xl font-bold mb-3 text-foreground">{service.title}</h4>
+                <p className="text-muted-foreground mb-6 leading-relaxed line-clamp-3">
                   {service.shortDescription}
                 </p>
                 
-                <div className="flex items-center justify-between mt-auto pt-6 border-t border-white/5">
+                <div className="flex items-center justify-between mt-auto pt-6 border-t border-border/50">
                   <div className="flex flex-col">
-                    <span className="text-xs text-slate-500 uppercase tracking-wider">Starting at</span>
-                    <span className="text-lg font-bold text-white">{service.price}</span>
+                    <span className="text-xs text-muted-foreground uppercase tracking-wider">Starting at</span>
+                    <span className="text-lg font-bold text-foreground">{service.price}</span>
                   </div>
                   <button className="text-sm font-medium text-primary hover:text-emerald-400 transition-colors flex items-center gap-1 group/btn">
                     Learn more 

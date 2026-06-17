@@ -68,7 +68,7 @@ export const AppointmentSection = () => {
   };
 
   return (
-    <section id="appointment" className="py-24 bg-slate-950 relative overflow-hidden">
+    <section id="appointment" className="py-16 md:py-20 bg-muted/30 relative overflow-hidden">
       {/* Decorative Calendar Icon Background */}
       <div className="absolute top-0 right-0 opacity-5 pointer-events-none transform translate-x-1/4 -translate-y-1/4">
         <Calendar className="w-96 h-96 text-primary" />
@@ -77,18 +77,18 @@ export const AppointmentSection = () => {
       <div className="container mx-auto px-6 max-w-4xl relative z-10">
         <div className="text-center mb-12">
           <h2 className="text-sm font-bold tracking-widest text-primary uppercase mb-2">Secure Your Spot</h2>
-          <h3 className="text-4xl md:text-5xl font-heading font-bold mb-4">Book an Appointment</h3>
-          <p className="text-slate-400">Skip the waiting room. Schedule your visit digitally in seconds.</p>
+          <h3 className="text-4xl md:text-5xl font-heading font-bold mb-4 text-foreground">Book an Appointment</h3>
+          <p className="text-muted-foreground">Skip the waiting room. Schedule your visit digitally in seconds.</p>
         </div>
 
         <div className="glass-card rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
           {isSuccess ? (
             <div className="flex flex-col items-center justify-center py-20 animate-in fade-in zoom-in duration-500">
               <div className="w-20 h-20 bg-emerald-500/20 rounded-full flex items-center justify-center mb-6">
-                <CheckCircle2 className="w-10 h-10 text-emerald-400" />
+                <CheckCircle2 className="w-10 h-10 text-emerald-500" />
               </div>
-              <h4 className="text-2xl font-bold mb-2">Request Submitted!</h4>
-              <p className="text-slate-400 text-center max-w-sm">
+              <h4 className="text-2xl font-bold mb-2 text-foreground">Request Submitted!</h4>
+              <p className="text-muted-foreground text-center max-w-sm">
                 Your appointment request has been sent. We will review it and confirm via WhatsApp shortly.
               </p>
             </div>
@@ -98,90 +98,90 @@ export const AppointmentSection = () => {
                 
                 {/* Name */}
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">Full Name <span className="text-red-400">*</span></label>
+                  <label className="block text-sm font-medium text-foreground mb-2">Full Name <span className="text-red-500">*</span></label>
                   <input 
                     {...register('name')}
-                    className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     placeholder="John Doe"
                   />
-                  {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name.message}</p>}
+                  {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
                 </div>
 
                 {/* Phone */}
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">Phone Number <span className="text-red-400">*</span></label>
+                  <label className="block text-sm font-medium text-foreground mb-2">Phone Number <span className="text-red-500">*</span></label>
                   <input 
                     {...register('phone')}
                     type="tel"
-                    className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     placeholder="+1 234 567 8900"
                   />
-                  {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone.message}</p>}
+                  {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>}
                 </div>
 
                 {/* Email */}
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">Email Address</label>
+                  <label className="block text-sm font-medium text-foreground mb-2">Email Address</label>
                   <input 
                     {...register('email')}
                     type="email"
-                    className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     placeholder="john@example.com"
                   />
-                  {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email.message}</p>}
+                  {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
                 </div>
 
                 {/* Service */}
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">Service Needed <span className="text-red-400">*</span></label>
+                  <label className="block text-sm font-medium text-foreground mb-2">Service Needed <span className="text-red-500">*</span></label>
                   <select 
                     {...register('service')}
-                    className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all appearance-none"
+                    className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all appearance-none"
                   >
                     <option value="">Select a service...</option>
                     {servicesData.map(s => (
                       <option key={s.id} value={s.id}>{s.title}</option>
                     ))}
                   </select>
-                  {errors.service && <p className="text-red-400 text-xs mt-1">{errors.service.message}</p>}
+                  {errors.service && <p className="text-red-500 text-xs mt-1">{errors.service.message}</p>}
                 </div>
 
                 {/* Date */}
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">Preferred Date <span className="text-red-400">*</span></label>
+                  <label className="block text-sm font-medium text-foreground mb-2">Preferred Date <span className="text-red-500">*</span></label>
                   <input 
                     {...register('date')}
                     type="date"
                     min={new Date().toISOString().split('T')[0]}
-                    className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all [color-scheme:dark]"
+                    className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                   />
-                  {errors.date && <p className="text-red-400 text-xs mt-1">{errors.date.message}</p>}
+                  {errors.date && <p className="text-red-500 text-xs mt-1">{errors.date.message}</p>}
                 </div>
 
                 {/* Time */}
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">Preferred Time <span className="text-red-400">*</span></label>
+                  <label className="block text-sm font-medium text-foreground mb-2">Preferred Time <span className="text-red-500">*</span></label>
                   <select 
                     {...register('time')}
-                    className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all appearance-none"
+                    className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all appearance-none"
                   >
                     <option value="">Select time block...</option>
                     <option value="Morning (9AM - 12PM)">Morning (9AM - 12PM)</option>
                     <option value="Afternoon (12PM - 4PM)">Afternoon (12PM - 4PM)</option>
                     <option value="Evening (4PM - 8PM)">Evening (4PM - 8PM)</option>
                   </select>
-                  {errors.time && <p className="text-red-400 text-xs mt-1">{errors.time.message}</p>}
+                  {errors.time && <p className="text-red-500 text-xs mt-1">{errors.time.message}</p>}
                 </div>
 
               </div>
 
               {/* Message */}
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">Brief Message / Symptoms</label>
+                <label className="block text-sm font-medium text-foreground mb-2">Brief Message / Symptoms</label>
                 <textarea 
                   {...register('message')}
                   rows={4}
-                  className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
+                  className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
                   placeholder="Please describe your symptoms or reason for visit..."
                 />
                 {errors.message && <p className="text-red-400 text-xs mt-1">{errors.message.message}</p>}
@@ -193,13 +193,13 @@ export const AppointmentSection = () => {
                   type="checkbox" 
                   {...register('consent')}
                   id="consent"
-                  className="mt-1 w-4 h-4 rounded border-slate-700 text-primary focus:ring-primary bg-slate-900"
+                  className="mt-1 w-4 h-4 rounded border-border text-primary focus:ring-primary bg-background"
                 />
-                <label htmlFor="consent" className="text-sm text-slate-400 leading-relaxed">
+                <label htmlFor="consent" className="text-sm text-muted-foreground leading-relaxed">
                   I agree to share my details with the clinic for the purpose of scheduling an appointment. I understand my data will be securely transmitted via WhatsApp and Email.
                 </label>
               </div>
-              {errors.consent && <p className="text-red-400 text-xs">{errors.consent.message}</p>}
+              {errors.consent && <p className="text-red-500 text-xs">{errors.consent.message}</p>}
 
               {/* Submit */}
               <div className="flex flex-col sm:flex-row gap-4">
