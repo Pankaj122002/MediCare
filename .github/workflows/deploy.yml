@@ -26,6 +26,4 @@ jobs:
         run: npm install -g firebase-tools
         
       - name: Deploy to Firebase
-        run: firebase deploy --only hosting
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: firebase deploy --only hosting --project medicare-c428d --token "${{ secrets.FIREBASE_TOKEN }}"
