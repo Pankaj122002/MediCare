@@ -3,7 +3,7 @@ import doctorData from '../data/doctor.json';
 
 export const ContactSection = () => {
   return (
-    <section id="contact" className="py-8 md:py-10 bg-background relative">
+    <section id="contact" className="py-4 md:py-6 bg-background relative">
       <div className="container mx-auto px-4 md:px-6 max-w-6xl relative z-10">
         <div className="text-center mb-5 md:mb-6">
           <h2 className="text-sm font-bold tracking-widest text-primary uppercase mb-1.5">Get in Touch</h2>
