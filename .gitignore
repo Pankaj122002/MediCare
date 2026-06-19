@@ -23,3 +23,14 @@ dist-ssr
 *.sln
 *.sw?
 .env
+
+# Replit
+.replit
+.upm/
+.cache/
+replit.nix
+attached_assets/
+.canvas/
+
+# Firebase
+.firebase/
