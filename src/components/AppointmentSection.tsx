@@ -67,19 +67,19 @@ export const AppointmentSection = () => {
   };
 
   return (
-    <section id="appointment" className="py-16 md:py-20 bg-muted/30 relative overflow-hidden">
+    <section id="appointment" className="py-8 md:py-12 bg-muted/30 relative overflow-hidden">
       <div className="absolute top-0 right-0 opacity-5 pointer-events-none transform translate-x-1/4 -translate-y-1/4">
         <Calendar className="w-64 md:w-96 h-64 md:h-96 text-primary" />
       </div>
 
       <div className="container mx-auto px-4 md:px-6 max-w-4xl relative z-10">
-        <div className="text-center mb-8 md:mb-12">
-          <h2 className="text-sm font-bold tracking-widest text-primary uppercase mb-2">Secure Your Spot</h2>
-          <h3 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold mb-3 text-foreground">Book an Appointment</h3>
-          <p className="text-muted-foreground text-sm md:text-base">Skip the waiting room. Schedule your visit digitally in seconds.</p>
+        <div className="text-center mb-5 md:mb-7">
+          <h2 className="text-sm font-bold tracking-widest text-primary uppercase mb-1.5">Secure Your Spot</h2>
+          <h3 className="text-2xl md:text-3xl lg:text-4xl font-heading font-bold mb-2 text-foreground">Book an Appointment</h3>
+          <p className="text-muted-foreground text-sm">Skip the waiting room. Schedule your visit digitally in seconds.</p>
         </div>
 
-        <div className="glass-card rounded-2xl md:rounded-3xl p-5 md:p-8 lg:p-12 shadow-2xl relative overflow-hidden">
+        <div className="glass-card rounded-2xl md:rounded-3xl p-5 md:p-6 lg:p-8 shadow-2xl relative overflow-hidden">
           {isSuccess ? (
             <div className="flex flex-col items-center justify-center py-14 animate-in fade-in zoom-in duration-500">
               <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center mb-5">
