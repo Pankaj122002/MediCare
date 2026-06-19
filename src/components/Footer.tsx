@@ -1,4 +1,4 @@
-import React from 'react';
+
 import doctorData from '../data/doctor.json';
 import { Facebook, Twitter, Instagram, Linkedin, ArrowUp } from 'lucide-react';
 

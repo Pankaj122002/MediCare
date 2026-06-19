@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import emailjs from '@emailjs/browser';
 import { CheckCircle2, Loader2, Calendar } from 'lucide-react';
 import doctorData from '../data/doctor.json';
 import servicesData from '../data/services.json';

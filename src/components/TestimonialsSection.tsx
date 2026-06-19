@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Star } from 'lucide-react';
 import testimonialsData from '../data/testimonials.json';
 

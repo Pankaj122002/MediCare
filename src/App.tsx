@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Suspense, lazy } from 'react';
+import { useEffect, useState, Suspense, lazy } from 'react';
 import Lenis from 'lenis';
 import { Navigation } from './components/Navigation';
 import { HeroSection } from './components/HeroSection';

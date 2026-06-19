@@ -1,7 +1,6 @@
-import React, { useEffect, useRef } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, Stars } from '@react-three/drei';
-import * as THREE from 'three';
+import { useEffect, useRef } from 'react';
+import { Canvas } from '@react-three/fiber';
+import { Stars } from '@react-three/drei';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { PhoneCall, ArrowDown } from 'lucide-react';
@@ -25,7 +24,7 @@ export const HeroSection = () => {
       `/images/hero-bg/frame-${String(index).padStart(3, '0')}.webp`;
 
     const images: HTMLImageElement[] = [];
-    const airpods = { frame: 0 };
+    const scrollState = { frame: 0 };
 
     for (let i = 0; i < frameCount; i++) {
       images.push(new Image());
@@ -62,9 +61,9 @@ export const HeroSection = () => {
       if (!canvas || !context) return;
       context.clearRect(0, 0, canvas.width, canvas.height);
       
-      let img = images[airpods.frame];
+      let img = images[scrollState.frame];
       if (!img.complete || img.naturalWidth === 0) {
-        let fallbackIndex = airpods.frame;
+        let fallbackIndex = scrollState.frame;
         while (fallbackIndex >= 0 && (!images[fallbackIndex].complete || images[fallbackIndex].naturalWidth === 0)) {
           fallbackIndex--;
         }
@@ -106,7 +105,7 @@ export const HeroSection = () => {
       }
     });
 
-    tl.to(airpods, {
+    tl.to(scrollState, {
       frame: frameCount - 1,
       snap: 'frame',
       ease: 'none',

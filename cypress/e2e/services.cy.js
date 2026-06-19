@@ -1,13 +1,13 @@
 describe('Services and Appointment', () => {
   beforeEach(() => {
     cy.visit('/')
-    cy.get('button').contains('Explore My Services', { timeout: 30000 }).click()
+    cy.get('h1').contains('Your Health', { timeout: 30000 }).should('be.visible')
   })
 
   it('scrolls to appointment section and fills the form', () => {
     cy.get('a[href="#appointment"]').contains('Book Now').click({ force: true })
     cy.get('#appointment').should('be.visible')
-    
+
     // Fill the form
     cy.get('input[name="name"]').type('John Doe')
     cy.get('input[name="phone"]').type('1234567890')

@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { PhoneCall } from 'lucide-react';
 import doctorData from '../data/doctor.json';
 

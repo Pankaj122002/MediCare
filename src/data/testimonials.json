@@ -1,19 +1,19 @@
 [
   {
-    "name": "Michael Roberts",
-    "review": "Dr. Mitchell is incredible. The level of care and detail she provided during my consultation was unmatched. The clinic itself feels like a luxury hotel rather than a hospital. Highly recommended!",
+    "name": "Rahul Kumar",
+    "review": "Dr. Sharma is incredible. The level of care and detail he provided during my consultation was unmatched. The clinic itself is clean, modern, and well-organized. Highly recommended!",
     "rating": 5,
     "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&q=80"
   },
   {
-    "name": "Elena Rodriguez",
-    "review": "I was very nervous about my procedure, but the entire team made me feel completely at ease. The 3D models they used to explain my surgery helped me understand exactly what to expect.",
+    "name": "Priya Singh",
+    "review": "I was very nervous about my health checkup, but Dr. Sharma made me feel completely at ease. He explained everything clearly and answered all my questions patiently. A truly caring doctor.",
     "rating": 5,
     "image": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&q=80"
   },
   {
-    "name": "David Chen",
-    "review": "Booking an appointment was seamless through WhatsApp, and I didn't have to wait at all when I arrived. A truly modern, efficient, and premium healthcare experience.",
+    "name": "Amit Verma",
+    "review": "Booking an appointment was seamless through WhatsApp, and I didn't have to wait at all when I arrived. A truly modern, efficient, and caring healthcare experience.",
     "rating": 5,
     "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&q=80"
   }

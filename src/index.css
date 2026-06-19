@@ -88,6 +88,13 @@
   .text-gradient-primary {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-emerald-400;
   }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 /* Custom Scrollbar for non-Lenis elements */
