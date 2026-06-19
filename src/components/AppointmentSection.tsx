@@ -30,9 +30,9 @@ export const AppointmentSection = () => {
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
-    
+
     const serviceName = servicesData.find(s => s.id === data.service)?.title || data.service;
-    
+
     if (submissionMode === 'whatsapp') {
       const waMessage = `*New Appointment Request*%0A%0A` +
         `Name: ${data.name}%0A` +
@@ -42,7 +42,7 @@ export const AppointmentSection = () => {
         `Time: ${data.time}%0A` +
         `Service: ${serviceName}%0A` +
         `Message: ${data.message || 'N/A'}`;
-        
+
       window.open(`https://wa.me/${doctorData.whatsapp}?text=${waMessage}`, '_blank');
     } else {
       const emailSubject = encodeURIComponent(`New Appointment Request: ${data.name}`);
@@ -55,52 +55,51 @@ export const AppointmentSection = () => {
         `Service: ${serviceName}\n` +
         `Message: ${data.message || 'N/A'}`
       );
-      
+
       window.location.href = `mailto:${doctorData.email}?subject=${emailSubject}&body=${emailBody}`;
     }
-    
+
     setIsSubmitting(false);
     setIsSuccess(true);
     reset();
-    
+
     setTimeout(() => setIsSuccess(false), 5000);
   };
 
   return (
     <section id="appointment" className="py-16 md:py-20 bg-muted/30 relative overflow-hidden">
-      {/* Decorative Calendar Icon Background */}
       <div className="absolute top-0 right-0 opacity-5 pointer-events-none transform translate-x-1/4 -translate-y-1/4">
-        <Calendar className="w-96 h-96 text-primary" />
+        <Calendar className="w-64 md:w-96 h-64 md:h-96 text-primary" />
       </div>
 
-      <div className="container mx-auto px-6 max-w-4xl relative z-10">
-        <div className="text-center mb-12">
+      <div className="container mx-auto px-4 md:px-6 max-w-4xl relative z-10">
+        <div className="text-center mb-8 md:mb-12">
           <h2 className="text-sm font-bold tracking-widest text-primary uppercase mb-2">Secure Your Spot</h2>
-          <h3 className="text-4xl md:text-5xl font-heading font-bold mb-4 text-foreground">Book an Appointment</h3>
-          <p className="text-muted-foreground">Skip the waiting room. Schedule your visit digitally in seconds.</p>
+          <h3 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold mb-3 text-foreground">Book an Appointment</h3>
+          <p className="text-muted-foreground text-sm md:text-base">Skip the waiting room. Schedule your visit digitally in seconds.</p>
         </div>
 
-        <div className="glass-card rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+        <div className="glass-card rounded-2xl md:rounded-3xl p-5 md:p-8 lg:p-12 shadow-2xl relative overflow-hidden">
           {isSuccess ? (
-            <div className="flex flex-col items-center justify-center py-20 animate-in fade-in zoom-in duration-500">
-              <div className="w-20 h-20 bg-emerald-500/20 rounded-full flex items-center justify-center mb-6">
-                <CheckCircle2 className="w-10 h-10 text-emerald-500" />
+            <div className="flex flex-col items-center justify-center py-14 animate-in fade-in zoom-in duration-500">
+              <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center mb-5">
+                <CheckCircle2 className="w-8 h-8 text-emerald-500" />
               </div>
-              <h4 className="text-2xl font-bold mb-2 text-foreground">Request Submitted!</h4>
-              <p className="text-muted-foreground text-center max-w-sm">
+              <h4 className="text-xl font-bold mb-2 text-foreground">Request Submitted!</h4>
+              <p className="text-muted-foreground text-center max-w-sm text-sm">
                 Your appointment request has been sent. We will review it and confirm via WhatsApp shortly.
               </p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 md:space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+
                 {/* Name */}
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Full Name <span className="text-red-500">*</span></label>
-                  <input 
+                  <label className="block text-sm font-medium text-foreground mb-1.5">Full Name <span className="text-red-500">*</span></label>
+                  <input
                     {...register('name')}
-                    className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     placeholder="John Doe"
                   />
                   {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
@@ -108,23 +107,23 @@ export const AppointmentSection = () => {
 
                 {/* Phone */}
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Phone Number <span className="text-red-500">*</span></label>
-                  <input 
+                  <label className="block text-sm font-medium text-foreground mb-1.5">Phone Number <span className="text-red-500">*</span></label>
+                  <input
                     {...register('phone')}
                     type="tel"
-                    className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                    placeholder="+1 234 567 8900"
+                    className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    placeholder="+91 98765 43210"
                   />
                   {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>}
                 </div>
 
                 {/* Email */}
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Email Address</label>
-                  <input 
+                  <label className="block text-sm font-medium text-foreground mb-1.5">Email Address</label>
+                  <input
                     {...register('email')}
                     type="email"
-                    className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     placeholder="john@example.com"
                   />
                   {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
@@ -132,10 +131,10 @@ export const AppointmentSection = () => {
 
                 {/* Service */}
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Service Needed <span className="text-red-500">*</span></label>
-                  <select 
+                  <label className="block text-sm font-medium text-foreground mb-1.5">Service Needed <span className="text-red-500">*</span></label>
+                  <select
                     {...register('service')}
-                    className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all appearance-none"
+                    className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all appearance-none"
                   >
                     <option value="">Select a service...</option>
                     {servicesData.map(s => (
@@ -147,22 +146,22 @@ export const AppointmentSection = () => {
 
                 {/* Date */}
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Preferred Date <span className="text-red-500">*</span></label>
-                  <input 
+                  <label className="block text-sm font-medium text-foreground mb-1.5">Preferred Date <span className="text-red-500">*</span></label>
+                  <input
                     {...register('date')}
                     type="date"
                     min={new Date().toISOString().split('T')[0]}
-                    className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                   />
                   {errors.date && <p className="text-red-500 text-xs mt-1">{errors.date.message}</p>}
                 </div>
 
                 {/* Time */}
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Preferred Time <span className="text-red-500">*</span></label>
-                  <select 
+                  <label className="block text-sm font-medium text-foreground mb-1.5">Preferred Time <span className="text-red-500">*</span></label>
+                  <select
                     {...register('time')}
-                    className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all appearance-none"
+                    className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all appearance-none"
                   >
                     <option value="">Select time block...</option>
                     <option value="Morning (9AM - 12PM)">Morning (9AM - 12PM)</option>
@@ -171,16 +170,15 @@ export const AppointmentSection = () => {
                   </select>
                   {errors.time && <p className="text-red-500 text-xs mt-1">{errors.time.message}</p>}
                 </div>
-
               </div>
 
               {/* Message */}
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">Brief Message / Symptoms</label>
-                <textarea 
+                <label className="block text-sm font-medium text-foreground mb-1.5">Brief Message / Symptoms</label>
+                <textarea
                   {...register('message')}
-                  rows={4}
-                  className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
+                  rows={3}
+                  className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
                   placeholder="Please describe your symptoms or reason for visit..."
                 />
                 {errors.message && <p className="text-red-400 text-xs mt-1">{errors.message.message}</p>}
@@ -188,25 +186,25 @@ export const AppointmentSection = () => {
 
               {/* Consent */}
               <div className="flex items-start gap-3">
-                <input 
-                  type="checkbox" 
+                <input
+                  type="checkbox"
                   {...register('consent')}
                   id="consent"
-                  className="mt-1 w-4 h-4 rounded border-border text-primary focus:ring-primary bg-background"
+                  className="mt-1 w-4 h-4 rounded border-border text-primary focus:ring-primary bg-background flex-shrink-0"
                 />
-                <label htmlFor="consent" className="text-sm text-muted-foreground leading-relaxed">
+                <label htmlFor="consent" className="text-xs md:text-sm text-muted-foreground leading-relaxed">
                   I agree to share my details with the clinic for the purpose of scheduling an appointment. I understand my data will be securely transmitted via WhatsApp and Email.
                 </label>
               </div>
               {errors.consent && <p className="text-red-500 text-xs">{errors.consent.message}</p>}
 
               {/* Submit */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button 
-                  type="submit" 
+              <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
+                <button
+                  type="submit"
                   onClick={() => setSubmissionMode('whatsapp')}
                   disabled={isSubmitting}
-                  className="flex-1 bg-emerald-500 hover:bg-emerald-600 disabled:bg-emerald-500/50 text-white font-medium py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] flex items-center justify-center gap-2"
+                  className="flex-1 bg-emerald-500 hover:bg-emerald-600 disabled:bg-emerald-500/50 text-white font-medium py-3.5 md:py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] flex items-center justify-center gap-2 text-sm md:text-base"
                 >
                   {isSubmitting && submissionMode === 'whatsapp' ? (
                     <Loader2 className="w-5 h-5 animate-spin" />
@@ -215,11 +213,11 @@ export const AppointmentSection = () => {
                   )}
                 </button>
 
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   onClick={() => setSubmissionMode('email')}
                   disabled={isSubmitting}
-                  className="flex-1 bg-primary hover:bg-primary/90 disabled:bg-primary/50 text-white font-medium py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(14,165,233,0.3)] flex items-center justify-center gap-2"
+                  className="flex-1 bg-primary hover:bg-primary/90 disabled:bg-primary/50 text-white font-medium py-3.5 md:py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(14,165,233,0.3)] flex items-center justify-center gap-2 text-sm md:text-base"
                 >
                   {isSubmitting && submissionMode === 'email' ? (
                     <Loader2 className="w-5 h-5 animate-spin" />
