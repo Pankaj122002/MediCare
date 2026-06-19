@@ -5,7 +5,7 @@ interface IntroSequenceProps {
   onFinish: () => void;
 }
 
-const FRAME_COUNT = 300;
+const FRAME_COUNT = 220;
 const PLAYBACK_FPS = 30;
 const START_THRESHOLD = 40; // start playback after this many frames loaded
 const PARALLEL_BATCH = 10; // load this many images concurrently

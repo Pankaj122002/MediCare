@@ -6,6 +6,11 @@ import doctorData from '../data/doctor.json';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Use every 2nd frame = 150 unique images instead of 300
+const TOTAL_FRAMES = 300;
+const FRAME_STEP = 2;
+const FRAME_COUNT = Math.ceil(TOTAL_FRAMES / FRAME_STEP); // 150
+
 export const HeroSection = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -22,18 +27,17 @@ export const HeroSection = () => {
     const context = canvas?.getContext('2d', { alpha: false });
     if (!canvas || !context) return;
 
-    const frameCount = 300;
-    const currentFrame = (index: number) =>
-      `/images/hero-bg/frame-${String(index).padStart(3, '0')}.webp`;
+    // Map logical frame index to actual file frame index
+    const frameFilePath = (logicalIndex: number) => {
+      const fileIndex = logicalIndex * FRAME_STEP;
+      return `/images/hero-bg/frame-${String(fileIndex).padStart(3, '0')}.webp`;
+    };
 
-    const images: HTMLImageElement[] = [];
+    // Store pre-decoded bitmaps for fast GPU rendering
+    const bitmaps: (ImageBitmap | null)[] = new Array(FRAME_COUNT).fill(null);
     const scrollState = { frame: 0 };
 
-    for (let i = 0; i < frameCount; i++) {
-      images.push(new Image());
-    }
-
-    // Render with rAF batching to avoid redundant draws
+    // Render with rAF batching
     function scheduleRender() {
       if (rafId.current) return;
       rafId.current = requestAnimationFrame(() => {
@@ -47,64 +51,66 @@ export const HeroSection = () => {
       const frameIdx = Math.round(scrollState.frame);
       if (frameIdx === lastDrawnFrame.current) return;
 
-      let img = images[frameIdx];
-      if (!img?.complete || img.naturalWidth === 0) {
-        // Find nearest loaded frame
+      // Find frame or nearest loaded fallback
+      let bitmap = bitmaps[frameIdx];
+      if (!bitmap) {
         let fallback = frameIdx;
-        while (fallback >= 0 && (!images[fallback]?.complete || images[fallback]?.naturalWidth === 0)) {
-          fallback--;
-        }
+        while (fallback >= 0 && !bitmaps[fallback]) fallback--;
         if (fallback < 0) return;
-        img = images[fallback];
+        bitmap = bitmaps[fallback]!;
       }
 
       lastDrawnFrame.current = frameIdx;
 
-      const hRatio = canvas.width / img.width;
-      const vRatio = canvas.height / img.height;
+      const hRatio = canvas.width / bitmap.width;
+      const vRatio = canvas.height / bitmap.height;
       const ratio = Math.max(hRatio, vRatio);
-      const cx = (canvas.width - img.width * ratio) / 2;
-      const cy = (canvas.height - img.height * ratio) / 2;
+      const cx = (canvas.width - bitmap.width * ratio) / 2;
+      const cy = (canvas.height - bitmap.height * ratio) / 2;
 
-      context.drawImage(img, 0, 0, img.width, img.height, cx, cy, img.width * ratio, img.height * ratio);
+      context.drawImage(bitmap, 0, 0, bitmap.width, bitmap.height, cx, cy, bitmap.width * ratio, bitmap.height * ratio);
     }
 
-    // Load first frame immediately
-    images[0].src = currentFrame(0);
-    images[0].onload = render;
-
-    // Sequential lazy loading for remaining frames
-    let currentLoadIndex = 1;
-    const loadNextImage = () => {
-      if (currentLoadIndex >= frameCount) return;
-      const idx = currentLoadIndex;
-      const img = images[idx];
-      img.onload = () => {
-        currentLoadIndex++;
-        // Use setTimeout to yield to main thread between loads
-        setTimeout(loadNextImage, 0);
-      };
-      img.onerror = () => {
-        currentLoadIndex++;
-        setTimeout(loadNextImage, 0);
-      };
-      img.src = currentFrame(idx);
+    // Load and decode frame into ImageBitmap (GPU-ready)
+    const loadFrame = (logicalIndex: number): Promise<void> => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => {
+          createImageBitmap(img).then((bmp) => {
+            bitmaps[logicalIndex] = bmp;
+            if (logicalIndex === 0) render();
+            resolve();
+          }).catch(() => resolve());
+        };
+        img.onerror = () => resolve();
+        img.src = frameFilePath(logicalIndex);
+      });
     };
 
-    const startHeroPreload = () => loadNextImage();
-    window.addEventListener('hero-preload', startHeroPreload, { once: true });
-    const fallbackTimer = setTimeout(loadNextImage, 12000);
+    // Sequential loading with main thread yielding
+    let currentLoadIndex = 0;
+    const loadNextFrame = () => {
+      if (currentLoadIndex >= FRAME_COUNT) return;
+      const idx = currentLoadIndex++;
+      loadFrame(idx).then(() => {
+        setTimeout(loadNextFrame, 0);
+      });
+    };
 
-    // Handle Resize (debounced)
+    const startHeroPreload = () => loadNextFrame();
+    window.addEventListener('hero-preload', startHeroPreload, { once: true });
+    const fallbackTimer = setTimeout(loadNextFrame, 12000);
+
+    // Debounced resize
     let resizeTimer: number;
     const handleResize = () => {
       clearTimeout(resizeTimer);
       resizeTimer = window.setTimeout(() => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        lastDrawnFrame.current = -1; // Force re-render
+        lastDrawnFrame.current = -1;
         render();
-      }, 100);
+      }, 150);
     };
     window.addEventListener('resize', handleResize);
     canvas.width = window.innerWidth;
@@ -116,15 +122,15 @@ export const HeroSection = () => {
         trigger: containerRef.current,
         start: 'top top',
         end: '+=200%',
-        scrub: 0.8, // slightly higher for smoother interpolation
+        scrub: 1, // higher value = smoother but slightly delayed
         pin: true,
       }
     });
 
     tl.to(scrollState, {
-      frame: frameCount - 1,
+      frame: FRAME_COUNT - 1,
       ease: 'none',
-      onUpdate: scheduleRender, // batched via rAF instead of direct render
+      onUpdate: scheduleRender,
     });
 
     // Text animation
@@ -140,12 +146,13 @@ export const HeroSection = () => {
       window.removeEventListener('resize', handleResize);
       if (rafId.current) cancelAnimationFrame(rafId.current);
       ScrollTrigger.getAll().forEach(t => t.kill());
+      // Clean up bitmaps
+      bitmaps.forEach(b => b?.close());
     };
   }, []);
 
   return (
     <section id="hero" ref={containerRef} className="relative h-screen w-full bg-black overflow-hidden">
-      {/* Cinematic Image Sequence Canvas */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full z-0 opacity-70"
