@@ -112,10 +112,10 @@ export const AboutSection = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 mb-12">
-              <a href="/cv.pdf" target="_blank" className="flex items-center gap-2 px-6 py-3 bg-muted hover:bg-muted/80 text-foreground rounded-full transition-colors border border-border">
+              <span className="flex items-center gap-2 px-6 py-3 bg-muted text-foreground rounded-full border border-border cursor-default">
                 <Download className="w-4 h-4" />
                 <span>Download CV</span>
-              </a>
+              </span>
             </div>
 
             {/* Stats */}

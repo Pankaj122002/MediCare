@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface IntroSequenceProps {
@@ -10,11 +10,19 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({ onFinish }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isFadingOut, setIsFadingOut] = useState(false);
   const [isReady, setIsReady] = useState(false);
-  const [hasStarted, setHasStarted] = useState(false);
+  const [dots, setDots] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  
-  // Store the playback trigger so the button can call it
-  const startPlaybackRef = useRef<(() => void) | null>(null);
+
+  const dotTexts = ['', '.', '..', '...'];
+
+  useEffect(() => {
+    if (!isReady && !isPlaying) {
+      const interval = setInterval(() => {
+        setDots(prev => (prev + 1) % 4);
+      }, 500);
+      return () => clearInterval(interval);
+    }
+  }, [isReady, isPlaying]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -32,7 +40,6 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({ onFinish }) => {
       images.push(new Image());
     }
 
-    // Sequentially preload images
     let currentLoadIndex = 0;
     const loadNextImage = () => {
       if (currentLoadIndex >= frameCount) return;
@@ -48,7 +55,6 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({ onFinish }) => {
         requestAnimationFrame(loadNextImage);
       };
       img.onerror = () => {
-        // Infinite retry for dropped CDN frames to guarantee 100% load
         setTimeout(() => {
           img.src = currentFrame(currentLoadIndex);
         }, 200);
@@ -65,16 +71,16 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({ onFinish }) => {
     } else {
       window.addEventListener('load', startPreloading);
     }
+    
     let playFrame = 0;
     let animationRef: number;
     let lastTime = performance.now();
-    const fpsInterval = 1000 / 30; // target 30 FPS
+    const fpsInterval = 1000 / 30;
 
     const handleEnded = () => {
       setIsFadingOut(true);
       window.dispatchEvent(new Event('hero-preload'));
       
-      // Fade out audio smoothly
       if (audioRef.current) {
         const audio = audioRef.current;
         const fadeAudio = setInterval(() => {
@@ -89,7 +95,7 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({ onFinish }) => {
 
       setTimeout(() => {
         onFinish();
-      }, 1500); // 1.5s fade out
+      }, 1500);
     };
 
     const renderCurrentFrame = () => {
@@ -98,7 +104,6 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({ onFinish }) => {
       
       let img = images[playFrame];
       if (!img || !img.complete || img.naturalWidth === 0) {
-        // Find latest loaded frame
         let fallbackIndex = playFrame;
         while (fallbackIndex >= 0 && (!images[fallbackIndex].complete || images[fallbackIndex].naturalWidth === 0)) {
           fallbackIndex--;
@@ -121,7 +126,6 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({ onFinish }) => {
         centerShift_x, centerShift_y, img.width * ratio, img.height * ratio);
     };
 
-    // Handle Resize
     const handleResize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -130,13 +134,11 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({ onFinish }) => {
     window.addEventListener('resize', handleResize);
     handleResize();
 
-
-
     const startPlayback = () => {
       setIsPlaying(true);
       if (audioRef.current) {
         audioRef.current.volume = 1;
-        audioRef.current.currentTime = 1; // Fast-forward 1 second
+        audioRef.current.currentTime = 1;
         audioRef.current.play().catch(e => console.log('Audio play failed:', e));
       }
       
@@ -147,7 +149,6 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({ onFinish }) => {
           lastTime = time - (elapsed % fpsInterval);
           
           if (playFrame < frameCount - 1) {
-            // Only advance if next frame is loaded (buffer wait)
             if (images[playFrame + 1].complete) {
               playFrame++;
               renderCurrentFrame();
@@ -157,7 +158,6 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({ onFinish }) => {
             return;
           }
 
-          // Trim logic: if we are within the last 60 frames (2 seconds at 30fps)
           if (playFrame >= frameCount - 60 && !isFadingOut) {
             handleEnded();
             return;
@@ -169,16 +169,17 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({ onFinish }) => {
       animationRef = requestAnimationFrame(playLoop);
     };
 
-    startPlaybackRef.current = startPlayback;
+    if (isReady) {
+      startPlayback();
+    }
 
     return () => {
       window.removeEventListener('load', startPreloading);
       window.removeEventListener('resize', handleResize);
       if (animationRef) cancelAnimationFrame(animationRef);
     };
-  }, []);
-
-  // Removed silent preloading of Hero frames to prevent extreme CPU/Network congestion during playback
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isReady]);
 
   return (
     <AnimatePresence>
@@ -189,7 +190,6 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({ onFinish }) => {
         exit={{ opacity: 0 }}
         transition={{ duration: 1.5, ease: "easeInOut" }}
       >
-        {/* Synchronized Audio Track */}
         <audio ref={audioRef} src="/videos/introsequence.mp3" preload="auto" />
 
         <canvas
@@ -197,29 +197,16 @@ export const IntroSequence: React.FC<IntroSequenceProps> = ({ onFinish }) => {
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${isPlaying ? 'opacity-100' : 'opacity-0'}`}
         />
         
-        {(!hasStarted) && (
+        {!isPlaying && (
           <div className="absolute inset-0 flex flex-col items-center justify-center z-10 bg-slate-900/40 backdrop-blur-sm">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
             >
-              <button
-                onClick={() => {
-                  if (isReady && startPlaybackRef.current) {
-                    setHasStarted(true);
-                    startPlaybackRef.current();
-                  }
-                }}
-                disabled={!isReady}
-                className={`px-8 py-4 rounded-full font-semibold tracking-wide transition-all duration-300 ${
-                  isReady 
-                    ? 'bg-primary text-white hover:bg-primary-dark hover:scale-105 shadow-lg shadow-primary/30 cursor-pointer' 
-                    : 'bg-slate-700 text-slate-400 cursor-not-allowed'
-                }`}
-              >
-                {isReady ? 'Explore My Services' : 'Loading Assets...'}
-              </button>
+              <span className="text-2xl font-semibold text-white tracking-wide">
+                Loading{dotTexts[dots]}
+              </span>
             </motion.div>
           </div>
         )}

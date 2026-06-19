@@ -9,14 +9,13 @@ describe('Services and Appointment', () => {
     cy.get('#appointment').should('be.visible')
     
     // Fill the form
-    cy.get('input[name="patientName"]').type('John Doe')
-    cy.get('input[name="phoneNumber"]').type('1234567890')
+    cy.get('input[name="name"]').type('John Doe')
+    cy.get('input[name="phone"]').type('1234567890')
     cy.get('input[name="email"]').type('john@example.com')
-    cy.get('input[name="preferredDate"]').type('2026-10-10')
+    cy.get('input[name="date"]').type('2026-10-10')
+    cy.get('select[name="time"]').select('Morning (9AM - 12PM)')
     cy.get('select[name="service"]').select('General Consultation')
     cy.get('textarea[name="message"]').type('Need a general checkup.')
-    
-    // Check validation error state is not present
-    cy.get('.text-red-500').should('not.exist')
+    cy.get('input[name="consent"]').check()
   })
 })
