@@ -79,9 +79,9 @@ export const AppointmentSection = () => {
           <p className="text-muted-foreground text-sm">Skip the waiting room. Schedule your visit digitally in seconds.</p>
         </div>
 
-        <div className="glass-card rounded-2xl md:rounded-3xl p-5 md:p-6 lg:p-8 shadow-2xl relative overflow-hidden">
+        <div className="glass-card rounded-2xl md:rounded-3xl p-4 md:p-5 lg:p-6 shadow-2xl relative overflow-hidden">
           {isSuccess ? (
-            <div className="flex flex-col items-center justify-center py-14 animate-in fade-in zoom-in duration-500">
+            <div className="flex flex-col items-center justify-center py-10 animate-in fade-in zoom-in duration-500">
               <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center mb-5">
                 <CheckCircle2 className="w-8 h-8 text-emerald-500" />
               </div>
@@ -91,15 +91,15 @@ export const AppointmentSection = () => {
               </p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 md:space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 md:space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
 
                 {/* Name */}
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-1.5">Full Name <span className="text-red-500">*</span></label>
+                  <label className="block text-xs font-medium text-foreground mb-1">Full Name <span className="text-red-500">*</span></label>
                   <input
                     {...register('name')}
-                    className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    className="w-full bg-background border border-border rounded-xl px-3 py-2 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     placeholder="John Doe"
                   />
                   {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
@@ -107,11 +107,11 @@ export const AppointmentSection = () => {
 
                 {/* Phone */}
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-1.5">Phone Number <span className="text-red-500">*</span></label>
+                  <label className="block text-xs font-medium text-foreground mb-1">Phone Number <span className="text-red-500">*</span></label>
                   <input
                     {...register('phone')}
                     type="tel"
-                    className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    className="w-full bg-background border border-border rounded-xl px-3 py-2 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     placeholder="+91 98765 43210"
                   />
                   {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>}
@@ -119,11 +119,11 @@ export const AppointmentSection = () => {
 
                 {/* Email */}
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-1.5">Email Address</label>
+                  <label className="block text-xs font-medium text-foreground mb-1">Email Address</label>
                   <input
                     {...register('email')}
                     type="email"
-                    className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    className="w-full bg-background border border-border rounded-xl px-3 py-2 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     placeholder="john@example.com"
                   />
                   {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
@@ -131,10 +131,10 @@ export const AppointmentSection = () => {
 
                 {/* Service */}
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-1.5">Service Needed <span className="text-red-500">*</span></label>
+                  <label className="block text-xs font-medium text-foreground mb-1">Service Needed <span className="text-red-500">*</span></label>
                   <select
                     {...register('service')}
-                    className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all appearance-none"
+                    className="w-full bg-background border border-border rounded-xl px-3 py-2 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all appearance-none"
                   >
                     <option value="">Select a service...</option>
                     {servicesData.map(s => (
@@ -146,22 +146,22 @@ export const AppointmentSection = () => {
 
                 {/* Date */}
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-1.5">Preferred Date <span className="text-red-500">*</span></label>
+                  <label className="block text-xs font-medium text-foreground mb-1">Preferred Date <span className="text-red-500">*</span></label>
                   <input
                     {...register('date')}
                     type="date"
                     min={new Date().toISOString().split('T')[0]}
-                    className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    className="w-full bg-background border border-border rounded-xl px-3 py-2 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                   />
                   {errors.date && <p className="text-red-500 text-xs mt-1">{errors.date.message}</p>}
                 </div>
 
                 {/* Time */}
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-1.5">Preferred Time <span className="text-red-500">*</span></label>
+                  <label className="block text-xs font-medium text-foreground mb-1">Preferred Time <span className="text-red-500">*</span></label>
                   <select
                     {...register('time')}
-                    className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all appearance-none"
+                    className="w-full bg-background border border-border rounded-xl px-3 py-2 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all appearance-none"
                   >
                     <option value="">Select time block...</option>
                     <option value="Morning (9AM - 12PM)">Morning (9AM - 12PM)</option>
@@ -174,11 +174,11 @@ export const AppointmentSection = () => {
 
               {/* Message */}
               <div>
-                <label className="block text-sm font-medium text-foreground mb-1.5">Brief Message / Symptoms</label>
+                <label className="block text-xs font-medium text-foreground mb-1">Brief Message / Symptoms</label>
                 <textarea
                   {...register('message')}
-                  rows={3}
-                  className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
+                  rows={2}
+                  className="w-full bg-background border border-border rounded-xl px-3 py-2 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
                   placeholder="Please describe your symptoms or reason for visit..."
                 />
                 {errors.message && <p className="text-red-400 text-xs mt-1">{errors.message.message}</p>}
@@ -192,7 +192,7 @@ export const AppointmentSection = () => {
                   id="consent"
                   className="mt-1 w-4 h-4 rounded border-border text-primary focus:ring-primary bg-background flex-shrink-0"
                 />
-                <label htmlFor="consent" className="text-xs md:text-sm text-muted-foreground leading-relaxed">
+                <label htmlFor="consent" className="text-xs text-muted-foreground leading-relaxed">
                   I agree to share my details with the clinic for the purpose of scheduling an appointment. I understand my data will be securely transmitted via WhatsApp and Email.
                 </label>
               </div>
@@ -204,7 +204,7 @@ export const AppointmentSection = () => {
                   type="submit"
                   onClick={() => setSubmissionMode('whatsapp')}
                   disabled={isSubmitting}
-                  className="flex-1 bg-emerald-500 hover:bg-emerald-600 disabled:bg-emerald-500/50 text-white font-medium py-3.5 md:py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] flex items-center justify-center gap-2 text-sm md:text-base"
+                  className="flex-1 bg-emerald-500 hover:bg-emerald-600 disabled:bg-emerald-500/50 text-white font-medium py-2.5 rounded-xl transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] flex items-center justify-center gap-2 text-sm"
                 >
                   {isSubmitting && submissionMode === 'whatsapp' ? (
                     <Loader2 className="w-5 h-5 animate-spin" />
@@ -217,7 +217,7 @@ export const AppointmentSection = () => {
                   type="submit"
                   onClick={() => setSubmissionMode('email')}
                   disabled={isSubmitting}
-                  className="flex-1 bg-primary hover:bg-primary/90 disabled:bg-primary/50 text-white font-medium py-3.5 md:py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(14,165,233,0.3)] flex items-center justify-center gap-2 text-sm md:text-base"
+                  className="flex-1 bg-primary hover:bg-primary/90 disabled:bg-primary/50 text-white font-medium py-2.5 rounded-xl transition-all shadow-[0_0_20px_rgba(14,165,233,0.3)] flex items-center justify-center gap-2 text-sm"
                 >
                   {isSubmitting && submissionMode === 'email' ? (
                     <Loader2 className="w-5 h-5 animate-spin" />
